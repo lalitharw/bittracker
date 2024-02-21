@@ -1,0 +1,2 @@
+celery -A habit_tracker.celery worker --pool=solo -l info
+celery -A habit_tracker beat -l info

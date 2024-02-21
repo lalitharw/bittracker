@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %} Bittracker | Home {% endblock %}</title>
+    <meta name="description" content="habit tracker" />
+    {% block style %}
+  
+    <link rel="icon" type="image/x-icon" href="{% static 'home_app/images/favicon-32x32.png' %}">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+    /> 
+    <link rel="stylesheet" href="{% static 'home_app/css/style.css' %}" />
+    <script
+      src="https://kit.fontawesome.com/82f23d236c.js"
+      crossorigin="anonymous"
+    ></script>
+   
+    <script defer src="{% static 'home_app/js/activePage.js' %}"></script>
+    {% endblock %}
+  </head>
+  <body>
+    <div class="container">
+      <nav class="sidebar">
+        <ul class="sidebar-can">
+          <!-- <li>
+            <a class="sidebar-item web usage" href="#"
+              > <i class="fa-solid fa-fire"></i><span style="text-transform: lowercase;" >{% block coins %}x{{coins.coins}}{% endblock %}</span></a
+            >
+          </li> -->
+          <li>
+            {% block home %}
+            <a class="sidebar-item home" href="{% url 'home' %}"
+              ><i class="fa-solid fa-house"></i>home</a
+            >
+            {% endblock %}
+          </li>
+          <li>
+            {% block second %}
+            <a class="sidebar-item explore" href="{% url 'addhabit' %}"
+              ><i class="fa-solid fa-plus"></i>Add New Habit</a
+            >{% endblock %}
+          </li>
+      
+          <li>
+            {% block forum %}
+            <a class="sidebar-item web usage" href="{% url 'forum_home' %}"
+              ><i class="fa-solid fa-chess-rook"></i>Habit Forum</a
+            >
+            {% endblock %}
+          </li>
+          {% block anchor_tag %} {% endblock %}
+        </ul>
+      </nav>
+      <div class="habit-section">
+        <div class="my-habits">
+          <h5 >{% block header %} My Habits {% endblock %}</h5>
+        </div>
+        <div class="name-area">
+          <div class="user-name">
+            
+
+            <i class="fa-solid fa-user"></i>
+            <p>{{request.user|title}}</p>
+            <i class="fa-solid fa-"></i>
+
+             
+          </div>
+           <a class="manage-habit" href="{% url 'logout' %}">Logout <i class="fa-solid fa-right-from-bracket"></i></a>
+        </div>
+
+        <section class="habit-list">
+          {% block section %}
+
+          {% for habit in habits %}
+          <div class="tile">
+            <a href="{% url 'func' habit.id %}">
+              {% for i in habit.habit_track.all %}
+                {% if i.date == today %}
+                  <input type="checkbox" checked  disabled/>
+                {% elif  i.date != today %}
+                
+                {% endif %}
+              {% endfor %}
+ 
+            <label>
+              <i class="fas fa-basketball-ball"></i>
+              <h6>{{habit.title}}</h6>
+              
+            </label>
+            </a>
+          </div>
+          {% endfor %}
+        
+          {% endblock %}
+
+         
+          {% block new %} 
+         {% endblock %}
+          </section>
+      
+      </div>
+    </div>
+  </body>
+</html>

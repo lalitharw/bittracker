@@ -1,0 +1,142 @@
+{% extends 'home_app/base.html' %}
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bittracker | Home</title>
+    <meta name="description" content="habit tracker" />
+    {% block style %}
+      {{block.super}}
+      <style>
+       a{
+        text-decoration: none;
+       }
+      </style>
+
+      <script src="{% static 'home_app/js/quotes.js' %}"></script>
+    {% endblock %}
+   
+  </head>
+  <body>
+    <div class="container">
+      <nav class="sidebar">
+        <ul class="sidebar-can">
+          <li>
+            <a class="sidebar-item home" href="{% url 'home' %}"
+              ><i class="fa-solid fa-house"></i>home</a
+            >
+          </li>
+          <li>
+            <a class="sidebar-item explore" href="{% url 'addhabit' %}"
+              ><i class="fa-solid fa-brain"></i>Add New Habit</a
+            >
+          </li>
+          <li>
+            <a class="sidebar-item habit" href="{% url 'tets' %}"
+              ><i class="fa-solid fa-compass"></i>habits</a
+            >
+          </li>
+          <li>
+            <a class="sidebar-item my post" href="mypost.html"
+              ><i class="fa-solid fa-pen"></i>my post</a
+            >
+          </li>
+          <li>
+            <a class="sidebar-item web usage" href="webusege.html"
+              ><i class="fa-solid fa-chart-simple"></i>web usage</a
+            >
+          </li>
+       
+        </ul>
+      </nav>
+      <div class="habit-section">
+        <div class="my-habits">
+          {% block header %}my habits | Your Rewards <span style="text-transform: lowercase;">x</span>{{coins.coins}}
+          <i><img src="{% static 'home_app/images/fire-unscreen.gif' %}" alt="" class="fas" style="width:40px; " >
+          </i>
+          
+      {% endblock %}
+        </div>
+        <div class="name-area">
+          <div class="user-name">
+
+            <i class="fa-solid fa-user"></i>
+            <p>{{request.user|title}}</p>
+            <i class="fa-solid fa-"></i>
+
+             
+          </div>
+           <a class="manage-habit" href="{% url 'logout' %}">Logout</a>
+           
+        
+        {% block section %}
+         {% for habit in habits %}
+      
+          <div class="tile">
+            <a href=" {% url 'func' habit.id %}"  >
+              <div class="card-top">
+                {% for i in habit.habit_track.all %}
+                
+                <div class="icon">
+                {% if i.date == today %}
+               
+                    <i class="fa-sharp fa-solid fa-circle-check  icon_style" ></i> 
+      
+                    {% endif %}
+                  </div>
+               
+              
+              {% endfor %}
+              <label>
+                
+              
+                <img src="{% static 'home_app/images/target.gif' %}" alt="" class="fas" style="width:70px">
+                <h6 style="text-align: center; margin-bottom:20px;">{{habit.title}}
+                  
+                  <p>{{habit.goal}} {{habit.goal_unit|slice:":15"}}</p>
+                </h6>
+                
+              </label> 
+                
+              </div>
+            </a>
+            <div class="shortcut">
+              <div class="links"><a href="{% url 'add_log' habit.id %}"  title="Add Log"><i class="fas fa-solid fa-plus"></i></a>
+                <a href="{% url 'report' habit.id %}" title="See Report"><i class="fa-solid fa-chart-simple"></i></a>
+              </div>
+           
+            </div>
+          </div>
+          
+          
+          {% endfor %}
+        
+        {% endblock %}
+        
+        {% block new %}
+        <div class="blank-area">
+          <header>Quote of the day</header>
+          <div class="content">
+            <div class="quote-area" style="text-align: justify;">
+              <i class="fas fa-quote-left"></i>
+              <p class="quote">{{value}}</p>
+              <i class="fas fa-quote-right"></i>
+            </div>
+            <div class="author">
+              <span>__</span>
+              <span class="name">{{key}}</span>
+             
+            
+        </div>
+        </div>
+        {% endblock %}
+      </section>
+        </section>
+       
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+{% extends 'home_app/base.html' %}
+{% load static %}
+{% block header %} Previous Winners {% endblock %}
+{% block title %} Bittracker | Previous Winners {% endblock %}
+<head>
+
+   
+    {% block style %}
+   
+    <link rel="stylesheet" href="{% static 'forum_app/css/forum_card.css' %}">
+     {{block.super}}
+     <link
+     rel="stylesheet"
+     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+   /> 
+    <style>
+        h2{
+            font-size: 18px;
+        }
+
+    </style>
+   
+    {% endblock %}
+
+  
+</head>
+
+
+
+{% block new %}
+   
+
+    {% for grp in group %}
+        
+
+        <div class="card" title="{{grp.desc}}">
+           
+            <div class="img-container">
+                <img src="{{grp.image_url}}" alt="">
+            </div>
+            <h2>{{grp.name}}</h2>
+            <br>
+            <h2><b>Winner: </b><span style="font-size: 14px;">{{grp.winner_user}} </span> <span style="font-size: 12px;font-weight:400;"> x100</span> <i class="fa-solid fa-fire" style="font-size: 20px;"></i></h2>
+        </div>
+      
+    {% endfor %}
+
+{% endblock %}

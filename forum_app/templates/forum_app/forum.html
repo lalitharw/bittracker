@@ -1,0 +1,33 @@
+{% extends 'home_app/base.html' %}
+{% load static %}
+{% block header %} <a href="{% url 'previous_winner' %}" style="font-size: 20px;background: white; padding:15px;border-radius: 15px;">Check Previous Winners <img src="{% static 'home_app/images/award.gif' %}" style="width: 25px;" alt=""></a>{% endblock %}
+
+{% block title %} Bittracker | Forum {% endblock %}
+    {% block style %}
+    {{block.super}}
+    <link rel="stylesheet" href="{% static 'forum_app/css/forum_card.css' %}">
+
+
+    {% endblock %}
+
+{% block new %}
+
+<section class="habit-list">
+{% for grp in group %}
+    
+    <a href="{% url 'group_info' grp.id %}">
+     <div class="card">
+        <div class="img-container">
+            <img src="{{grp.image_url}}" alt="">
+        </div>
+        <h2>{{grp.name}}</h2>
+        <p>{{grp.desc|slice:":60"}}...</p>
+     </div>  
+   
+    </a>
+  
+{% endfor %}
+
+{% endblock %}
+
+

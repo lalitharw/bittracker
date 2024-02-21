@@ -1,0 +1,87 @@
+{% extends 'home_app/base.html' %}
+{% load static %}
+<html lang='en'>
+  <head>
+    <meta charset='utf-8' />
+    {% block style %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css">
+    <script src='fullcalendar/dist/index.global.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.0.1/index.global.min.js"></script>
+    <link
+    rel="icon"
+    type="image/x-icon"
+    href="{% static 'home_app/images/favicon-32x32.png' %}"
+  />
+    <style>
+
+      .fc .fc-daygrid-event-harness{
+        position: relative;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        
+      }
+
+      .fc-direction-ltr .fc-daygrid-event.fc-event-end,
+      .fc-direction-rtl .fc-daygrid-event.fc-event-start{
+        margin-right: 2px;
+        height: 20px;
+        display: flex;
+        width: 20px;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        border-radius: 100px;
+      }
+
+        #calendar{
+            width:80vw;
+            height: 80vh;
+        }
+        :root{ --fc-event-bg-color:#f1912d;
+             --fc-event-border-color:none;
+             --fc-event-text-color:black;
+             --fc-button-bg-color:#f1912d;
+             --fc-button-border-color:none;
+             --fc-button-hover-bg-color:#ba7327;
+             --fc-button-hover-border-color:none;
+             --fc-button-hover-bg-color:#ba7327;
+             --fc-button-active-bg-color:#ba7327;
+             --fc-button-active-border-color:none;
+
+        }
+
+        .fc-col-header{
+          background-color: #fdd478;
+
+        }
+    </style>
+    {{block.super}}
+    {% endblock %}
+  </head>
+  <body>
+    {% block header %} {{habitlabel.title}} | {{habitlabel.goal}} {{habitlabel.goal_unit}} {% endblock %}
+    {% block new %}
+    
+    <div id='calendar' style="width: 75vw; height: 10vh;"></div>
+    <script>
+        let calendarEl = document.getElementById('calendar');
+
+        let calendar = new FullCalendar.Calendar(calendarEl,
+        
+        {
+            events: [
+                {% for display in display %}
+                {
+                    title: '{{display.track_unit|safe}}',
+                    start: "{{display.date|safe}}"
+                },
+                {% endfor %}
+            ]
+        });
+
+        calendar.render();
+      </script>
+      {% endblock %}
+  </body>
+</html>

@@ -1,0 +1,57 @@
+{% extends 'home_app/base.html' %}
+
+{% block title %} Bittracker | Tool  {% endblock %}
+
+{% block header %} {{title.title}} | {{title.goal}} {{title.goal_unit}} {% endblock %}
+
+{% block section %}
+{% for habit in habits %}
+<div class="tile">
+    <a href="{% url 'add_log' habit.id %}">
+    <label>
+        <i class="fas fa-solid fa-plus"></i>
+      <h6>Addlog</h6>
+    </label>
+    </a>
+  </div>
+
+  <div class="tile">
+    <a href="{% url 'report' habit.id %}">
+    <!-- <input type="checkbox" value="Yes"/> -->
+    <label>
+        <i class="fas fa-solid fa-chart-line"></i>
+      <h6>See Report</h6>
+    </label>
+    </a>
+  </div>
+
+  <div class="tile">
+    <a href="{% url 'edit_habit' habit.id %}">
+    <label>
+        <i class="fas solid fa-pen-to-square"></i>
+      <h6>Edit Habit</h6>
+    </label>
+    </a>
+  </div>
+  
+  <div class="tile">
+    <a href="{% url 'show_log' habit.id %}">
+    <label>
+        <i class="fas fa-solid fa-eye"></i>       
+      <h6>Log History</h6>
+    </label>
+    </a>
+  </div>
+
+  <div class="tile">
+    <a href="{% url 'delete_habit' habit.id %}">
+    <label>
+        <i class="fas fa-solid fa-trash"></i>       
+      <h6>Delete Habit</h6>
+    </label>
+    </a>
+  </div>
+  
+  {% endfor %}
+{% endblock %}
+

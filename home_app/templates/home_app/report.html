@@ -1,0 +1,126 @@
+{% extends 'home_app/base.html' %} {% load static %}
+<html>
+  <!-- head starts here -->
+  <head>
+    <meta charset="utf-8" />
+    <title>{% block title %} Bittracker | Report {% endblock %}</title>
+    {% block style %}
+    <style>
+      .container{
+        overflow: hidden;
+      }
+
+      
+    </style>
+    <link rel="stylesheet" href="{% static 'forum_app/css/popup.css' %}">
+    <script src="{% static 'forum_app/js/script.js' %}"></script>
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ 
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+
+    {{block.super}}
+    
+
+    {% endblock %}
+
+  </head>
+
+  <body>
+    <!-- script tag for chartjs ⬇️ -->
+    {% block header %} {{habitlabel.title|title}} | {{habitlabel.goal}} {{habitlabel.goal_unit}}  {% endblock %}
+    {% block anchor_tag %} <li>
+      <a class="sidebar-item web usage" href="{% url 'calendar' habitlabel.id %}"
+        ><i class="fa-solid fa-calendar"></i>Calendar</a
+      >
+    </li> {% endblock %}
+
+    <!-- code for rendering chartjs ⬇️ -->
+    {% block new %} {% if data %}
+   
+    <div class='container' style="width:90vw; height: 80vh;">
+      <canvas id="myChart" width="1300px" height="700px"></canvas>
+      <div>
+        <input type="month" onchange="filterChart(this)"/>
+     
+      </div>
+    {% else %}
+    <h1>No data</h1> 
+    {% endif %}
+
+ 
+
+<script>
+  // setup 
+  const data = {
+    labels:{{labels|safe}},
+    datasets: [{
+      label: 'Goals',
+      data: {{data|safe}},
+      borderColor:'black',
+          backgroundColor:'#ffcc54', 
+      borderWidth: 1
+    }]
+  }; 
+
+  // config 
+  const config = {
+    type: 'bar',
+    data,
+    options: {
+      scales: {
+        x:{
+          min: '2023-04-01',
+          max:'2023-04-30',
+          type:'time',
+          time:{
+            unit:'day'
+          }
+        },
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  };
+
+  // render init block
+  const myChart = new Chart(
+    document.getElementById('myChart'),
+    config
+
+  );
+
+  function filterChart(date){
+    console.log(date.value);
+    const year = date.value.substring(0,4);
+    const month = date.value.substring(5,7);
+    // console.log(year);
+   
+
+    const lastDay = (y,m) => {
+      // return 
+      return new Date(y,m,0).getDate()
+      // console.log(new Date(y,m,0).getDate())
+    }
+
+    lastDay(year,month);
+
+    const startDate = `${date.value}-01`;
+    // const endDate = `${date.value}-${lastDay(year,month)}`;
+    const endDate = `${date.value}-${lastDay(year,month)}`;
+
+
+    // console.log(startDate);
+    myChart.config.options.scales.x.min = startDate;
+    myChart.config.options.scales.x.max = endDate;
+
+    myChart.update();
+  }
+  // Instantly assign Chart.js version
+  
+  </script>
+
+    {% endblock %}
+  </body>
+</html>

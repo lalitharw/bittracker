@@ -1,0 +1,52 @@
+{% extends 'home_app/base.html' %}
+{% load static %}
+
+<head>
+  {% block style %}
+  <style>
+    .error{
+      color: green;
+    }
+  </style>
+    {{block.super}}
+
+    <link rel="stylesheet" href="{% static 'reg_login/css/signup_login.css' %}" />
+    {% endblock %}
+</head>
+
+{% block title %} Bittracker | Update Log {% endblock %}
+{% block header %} Update Log {% endblock %}
+<body>
+
+   
+    {% block section %}
+    <div class="form">
+      <form 
+      action=""
+      method="post"
+      enctype="multipart/form-data"
+      class="form_container"
+      novalidate
+    >
+  <h2>Update Log</h2>
+  {% csrf_token %}
+  {% for fm in form %}
+  <div class="txt_field" >
+    {{fm}}
+    <label>{{fm.label}}</label>
+  </div> 
+    <center><span class="errorlist">{{fm.errors|striptags}}</span></center> <br>
+  {% endfor %}
+  
+  {% for message in messages %}
+  <p class="error" style="text-align: center; color: green; font-weight: bold;">
+    {{message}} 
+  </p>
+  {% endfor %}
+
+  <input type="submit" value="Update" class="form_sighup_btn">
+</form>
+</div>
+{% endblock %}
+
+</body>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bittracker</title>
+    <style>
+        body{
+            color: white;
+            background-color: black;
+            font-family: 'Roboto Condensed', sans-serif;
+
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <center><h1>Hello, {{username}} You have won in {{forum_name}} challenge!! <br>
+    You have been Rewarded x100 coins we can check in your home page
+    </h1></center>
+    <!-- <center><img src="{% static 'home_app/images/frowning_face.gif' %}" alt="" srcset=""></center> -->
+    <center>
+    <picture>
+        <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f389/512.webp" type="image/webp">
+        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f389/512.gif" alt="🎉" style="width:100px">
+      </picture>
+      </center>
+    <center><h3>Best of Luck for your Future and Remember Keep Growing!</h3></center>
+</body>
+</html>

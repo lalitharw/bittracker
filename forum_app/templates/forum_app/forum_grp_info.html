@@ -1,0 +1,188 @@
+{% extends 'home_app/base.html' %}
+{% load static %}
+{% block header %} {{grp.name}} {% endblock %}
+{% block title %} Bittracker | {{grp.name}}  {% endblock %}
+<head>
+    {% block style %}
+
+    <style>
+
+        
+.form_container{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 350px;     
+    font-size: 13px;
+    text-transform: capitalize;
+    padding: 0 20px;
+    border-radius: 10px;
+    background-color: #FDD478;
+    box-shadow: 15px 15px 25px rgba(2,28,53,0.05);
+}
+
+ 
+ 
+.form_container h2{
+ text-align: center;
+ font-size: 22px;
+ margin: 25px;
+
+}
+
+form .txt_field{
+    position: relative;
+    margin-bottom: 20px;
+     
+}
+
+.txt_field input{
+    width: 100%;
+    height: 38px;
+    font-size: 14px;
+    border: 0;
+    outline: 0;
+    background:#fff;
+    border-radius:5px;
+    padding: 0 5px;
+}
+.txt_field label{   
+    position: absolute; 
+    top: 50%;
+    left: 7px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    transition: .3s;
+    color: #ababab;
+    
+}
+
+.txt_field input:focus ~ label,
+.txt_field input:valid ~ label{
+    top: -5px;
+    background-color: #fff;
+    padding: 0 3px 3px 3px;
+    border-radius: 5px;
+    
+}
+
+.form_sighup_btn{
+    width: 100%;
+    height: 38px;
+    font-size: 14px;
+    border: 0;
+    outline: 0;     
+    padding: 0 5px;
+    background-color: #F6941F;
+    text-transform: capitalize;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.form_login_btn{
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.form_sighup_btn:hover{
+    background-color:#f39e36 ;
+}
+
+
+
+.bg_form{
+  background-color: #FCF7E7;  
+  width:100vw;
+  height: 100vh;
+}
+         th,td{
+      text-align: center;
+      padding: 20px;
+    }
+
+    .btn{
+        background-color: #ecc770 ;
+        text-decoration: none;
+        color: black;
+        border-radius: 10px;
+        padding: 10px 20px; 
+        font-weight: bold;
+    }
+
+    .desc{
+        font-style: italic;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+  
+
+    </style>
+    <link rel="stylesheet" href="{% static 'home_app/css/table_design.css' %}" />
+    <link rel="stylesheet" href="{% static 'forum_app/css/popup.css' %}">
+     {{block.super}}
+    {% endblock %}
+</head>
+
+
+
+{% block new %}
+
+    <div>
+        <p class="desc">{{grp.desc}}</p>
+        <br>
+{% if hide == True %}
+<!-- <a class="btn" href="{% url 'update_forum_log' adder.id %}">Add Forum Log</a> -->
+<form action="{% url 'update_forum_log' adder.id %}" method="post" style="padding:20px">
+    {% csrf_token %}
+   
+    <b>Update Log:</b>
+    <br>
+    <div class="txt_field">
+    {{fm.track_unit}}
+        </div>
+
+        {% if messages %}
+        {% for message in messages %}
+            <p style="text-align: center; padding: 5px;color: green; font-weight:bold;" id="message">{{message}}</p>
+        {% endfor %}
+        {% endif %}
+    <input type="submit" value="submit" class="form_sighup_btn">
+</form>
+{% else %}
+ <form action="" method="post" style="padding:20px">
+    {% csrf_token %}
+   
+    <b>Add new Forum Log:</b>
+    <br>
+    <div class="txt_field">
+    {{fm.track_unit}}
+        </div>
+    <input type="submit" value="submit" class="form_sighup_btn">
+</form>
+{% endif %}
+
+
+
+<table  class="content-table" id="myTable">
+    <tr>
+  
+        <th>Username</th>
+        <th>Track_unit</th>
+       
+    </tr>
+    {% for grp in group_log %}
+    <tr>
+       
+        <td><b>{{grp.user}}</b></td>
+        <td>{{grp.track_unit}}</td>
+
+    </tr>
+    {% endfor %}
+</table>
+
+</div>
+
+<script src="{% static 'forum_app/js/script.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,93 @@
+  {% extends 'home_app/base.html' %}
+  {% load static %}
+  <head>
+    <title>Bittracker | Show log</title>
+
+    {% block style %}
+    <style>
+      body{
+        color: black;
+      }
+
+      th,td{
+        text-align: center;
+        padding: 20px;
+      }
+
+      .del-btn{
+        border: none;
+      }
+
+      a{
+        color: rgb(184, 164, 164);
+        text-decoration: none;
+      }
+
+      .actions{
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+      
+      }
+      input{
+        background-color: #fdd478;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 12px;
+      }
+
+  
+
+    </style>
+    <link rel="stylesheet" href="{% static 'home_app/css/table_design.css' %}" />
+    {{block.super}}
+    {% endblock %}
+
+  </head>
+
+  {% block header %} Log History {% endblock %}
+
+  {% block section %}
+  <center>
+
+  <div class="login-box">
+    {% if habits %}
+    <h1>Delete Log</h1>
+    
+  
+  <table class="content-table">
+    <tr>
+      <th>Name</th>
+      <th>Date</th>
+      <th>Track Unit</th>
+      <th>Action</th>
+    </tr>
+    {% for habits in habits %}
+    <tr>
+      <td>{{habits.habit.title}}</td>
+      <td>{{habits.date}}</td>
+      <td>{{habits.track_unit}}</td>
+      <td>
+        <div class="actions">
+        <form action="{% url 'del_log' habits.id %}" method="post">
+          {% csrf_token %}
+
+          <input type="submit" value="Delete" />
+        </form>
+        <!-- <form action="{% url 'update_user_log' habits.id %}" method="post">
+          {% csrf_token %}
+          <input type="submit" value="Update">
+        </form> -->
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
+
+    {% else %}
+    <h1>No log Added</h1>
+    <a href="{% url 'home' %}" class="home-link">Back Home</a>
+  </table>
+  {% endif %}
+  </div>
+  </center>
+  {% endblock %}
